@@ -1,5 +1,6 @@
 from playwright.sync_api import expect, Page
 import pytest
+
 from pages.login_page import LoginPage
 
 authorization_data_email_pass = [
