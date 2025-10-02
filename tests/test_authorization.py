@@ -1,8 +1,6 @@
 from playwright.sync_api import sync_playwright, expect, Page
 import pytest
 
-from tests.conftest import chromium_page
-
 
 @pytest.mark.regression
 @pytest.mark.authorization
