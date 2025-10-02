@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright, expect
+from playwright.sync_api import expect, Page
 import pytest
 
 
@@ -15,44 +15,18 @@ def check_visible_and_text(locator, text):
 
 @pytest.mark.regression
 @pytest.mark.courses
-def test_empty_courses_list():
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        context = browser.new_context()
-        page = context.new_page()
+def test_empty_courses_list(chromium_page_with_state: Page):
+    chromium_page_with_state.goto('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses')
 
-        page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+    header_courses = chromium_page_with_state.get_by_test_id('courses-list-toolbar-title-text')
+    check_visible_and_text(header_courses, 'Courses')
 
-        registration_email_input = page.get_by_test_id('registration-form-email-input').locator('input')
-        registration_email_input.fill('user.name@gmail.com')
+    no_result_header = chromium_page_with_state.get_by_test_id('courses-list-empty-view-title-text')
+    check_visible_and_text(no_result_header, 'There is no results')
 
-        registration_username_input = page.get_by_test_id('registration-form-username-input').locator('input')
-        registration_username_input.fill('username')
+    icon = chromium_page_with_state.get_by_test_id('courses-list-empty-view-icon')
+    expect(icon).to_be_visible()  # кажется покрывает требование по наличию и видимости элемента
 
-        registration_password_input = page.get_by_test_id('registration-form-password-input').locator('input')
-        registration_password_input.fill('password')
-
-        registration_button = page.get_by_test_id('registration-page-registration-button')
-        registration_button.click()
-
-        context.storage_state(path='browser_state.json')
-
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        context = browser.new_context(storage_state='browser_state.json')
-        page = context.new_page()
-
-        page.goto('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses')
-
-        header_courses = page.get_by_test_id('courses-list-toolbar-title-text')
-        check_visible_and_text(header_courses, 'Courses')
-
-        no_result_header = page.get_by_test_id('courses-list-empty-view-title-text')
-        check_visible_and_text(no_result_header, 'There is no results')
-
-        icon = page.get_by_test_id('courses-list-empty-view-icon')
-        expect(icon).to_be_visible()  # кажется покрывает требование по наличию и видимости элемента
-
-        paragraph_with_explanation = page.get_by_test_id('courses-list-empty-view-description-text')
-        check_visible_and_text(paragraph_with_explanation,
-                               'Results from the load test pipeline will be displayed here')
+    paragraph_with_explanation = chromium_page_with_state.get_by_test_id('courses-list-empty-view-description-text')
+    check_visible_and_text(paragraph_with_explanation,
+                           'Results from the load test pipeline will be displayed here')
