@@ -31,3 +31,4 @@ def courses_list_page(chromium_page_with_state: Page) -> CoursesListPage:
 @pytest.fixture
 def create_courses_page(chromium_page_with_state: Page) -> CreateCoursePage:
     return CreateCoursePage(page=chromium_page_with_state)
+
