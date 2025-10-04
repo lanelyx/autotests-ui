@@ -1,9 +1,9 @@
 from components.authentication.login_form_component import LoginFormComponent
-from components.elements.button import Button
-from components.elements.link import Link
-from components.elements.text import Text
+from elements import Button
+from elements import Link
+from elements import Text
 from pages.base_page import BasePage
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 
 class LoginPage(BasePage):

@@ -1,9 +1,9 @@
-from playwright.sync_api import expect, Page
+from playwright.sync_api import Page
 
 from components.base_component import BaseComponent
-from components.elements.button import Button
-from components.elements.input import Input
-from components.elements.text import Text
+from elements import Button
+from elements.input import Input
+from elements import Text
 
 
 class CreateCourseExerciseFormComponent(BaseComponent):

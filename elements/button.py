@@ -1,6 +1,6 @@
 from playwright.sync_api import expect
 
-from components.elements.base_element import BaseElement
+from elements.base_element import BaseElement
 class Button(BaseElement):
 
     def check_enabled(self, **kwargs):
