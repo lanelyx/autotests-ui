@@ -21,29 +21,27 @@ def test_create_course(
         courses_list_page: CoursesListPage
 ):
     create_courses_page.visit('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create')
-    create_courses_page.check_visible_create_course_title()
-    create_courses_page.check_disabled_create_course_button()
+    create_courses_page.toolbar_view.check_visible()
     create_courses_page.image_upload_widget.check_visible(is_image_uploaded=False)
-    create_courses_page.check_visible_create_course_form(
+    create_courses_page.create_course_form.check_visible(
         title='',
         description='',
         estimated_time='',
         max_score='0',
         min_score='0'
     )
-    create_courses_page.check_visible_create_exercises_title()
-    create_courses_page.check_visible_create_exercises_button()
+    create_courses_page.toolbar_view.check_visible()
     create_courses_page.check_visible_exercises_empty_view()
     create_courses_page.image_upload_widget.upload_preview_image(file="./testdata/files/image.png")
     create_courses_page.image_upload_widget.check_visible(is_image_uploaded=True)
-    create_courses_page.fill_create_course_form(
+    create_courses_page.create_course_form.fill(
         title='Playwright',
         estimated_time='2 weeks',
         description='Playwright',
         max_score='100',
         min_score='10'
     )
-    create_courses_page.click_create_course_button()
+    create_courses_page.toolbar_view.click_create_course_button()
     courses_list_page.toolbar_view.check_visible()
     courses_list_page.course_view.check_visible(
         index=0,
