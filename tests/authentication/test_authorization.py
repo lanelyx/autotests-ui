@@ -2,6 +2,8 @@ import pytest
 import allure
 
 from allure_commons.types import Severity
+
+from config import settings
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.stories import AllureStory
@@ -9,6 +11,7 @@ from tools.allure.tags import AllureTag
 from pages.authentication.login_page import LoginPage
 from pages.authentication.registration_page import RegistrationPage
 from pages.dashboard.dashboard_page import DashboardPage
+from tools.routes import AppRoute
 
 
 @pytest.mark.regression
@@ -40,7 +43,7 @@ class TestAuthorization:
     @allure.title('User login with wrong email or password')
     @allure.severity(Severity.CRITICAL)
     def test_wrong_email_or_password_authorization(self, login_page: LoginPage, email: str, password: str):
-        login_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
+        login_page.visit(AppRoute.LOGIN)
         login_page.login_form.fill(email=email, password=password)
         login_page.login_form.check_visible(email=email, password=password)
         login_page.click_login_button()
@@ -56,8 +59,12 @@ class TestAuthorization:
             registration_page: RegistrationPage,
 
     ):
-        registration_page.visit('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration')
-        registration_page.registration_form.fill(email='username@mail.ru', username='username', password='password')
+        registration_page.visit(AppRoute.REGISTRATION)
+        registration_page.registration_form.fill(
+            email=settings.test_user.email,
+            username=settings.test_user.username,
+            password=settings.test_user.password
+        )
         registration_page.click_registration_button()
 
         dashboard_page.toolbar_view.check_visible()
@@ -65,7 +72,10 @@ class TestAuthorization:
         dashboard_page.sidebar.check_visible()
         dashboard_page.sidebar.click_logout()
 
-        login_page.login_form.fill(email='username@mail.ru', password='password')
+        login_page.login_form.fill(
+            email=settings.test_user.email,
+            password=settings.test_user.password
+        )
         login_page.click_login_button()
 
         dashboard_page.toolbar_view.check_visible()
@@ -80,7 +90,7 @@ class TestAuthorization:
             login_page: LoginPage,
             registration_page: RegistrationPage
     ):
-        login_page.visit('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login')
+        login_page.visit(AppRoute.LOGIN)
         login_page.click_registration_link()
 
         registration_page.registration_form.check_visible(email='', username='', password='')
