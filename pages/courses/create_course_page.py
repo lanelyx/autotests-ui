@@ -17,7 +17,6 @@ class CreateCoursePage(BasePage):
         self.toolbar_view = CreateCourseToolbarViewComponent(page)
         self.image_upload_widget = ImageUploadWidgetComponent(page, 'create-course-preview')
         self.exercises_empty_view = EmptyViewComponent(page, 'create-course-exercises')
-        self.create_course_button = page.get_by_test_id('create-course-toolbar-create-course-button')
 
     def check_visible_exercises_empty_view(self):
         self.exercises_empty_view.check_visible(

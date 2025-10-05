@@ -1,5 +1,6 @@
 import pytest
 
+from components.views.image_upload_widget_component import ImageUploadWidgetComponent
 from pages.courses.courses_list_page import CoursesListPage
 from pages.courses.create_course_page import CreateCoursePage
 
@@ -48,4 +49,43 @@ class TestCourses:
             max_score='100',
             min_score='10',
             estimated_time='2 weeks'
+        )
+
+    def test_edit_course(
+            self,
+            create_courses_page: CreateCoursePage,
+            courses_list_page: CoursesListPage
+    ):
+        create_courses_page.visit('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create')
+        create_courses_page.create_course_form.fill(
+            title='Playwright',
+            estimated_time='2 weeks',
+            description='Playwright',
+            max_score='100',
+            min_score='10'
+        )
+        create_courses_page.image_upload_widget.upload_preview_image(file="./testdata/files/image.png")
+        create_courses_page.toolbar_view.click_create_course_button()
+        courses_list_page.course_view.check_visible(
+            index=0,
+            title='Playwright',
+            estimated_time='2 weeks',
+            max_score='100',
+            min_score='10'
+        )
+        courses_list_page.course_view.menu.click_edit()
+        create_courses_page.create_course_form.fill(
+            title='Playwright1',
+            estimated_time='2 weeks2',
+            description='Playwright3',
+            max_score='104',
+            min_score='15'
+        )
+        create_courses_page.toolbar_view.click_create_course_button()
+        courses_list_page.course_view.check_visible(
+            index=0,
+            title='Playwright1',
+            estimated_time='2 weeks2',
+            max_score='104',
+            min_score='15'
         )
