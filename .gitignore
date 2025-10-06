@@ -9,7 +9,7 @@ __pycache__
 allure-results
 allure-report
 
-# testing artefacts
+# testing artifacts
 *.html
 *.json
 videos
