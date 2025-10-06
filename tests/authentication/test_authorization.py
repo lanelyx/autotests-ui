@@ -35,6 +35,7 @@ class TestAuthorization:
         return [f"Email: {email!r}, Password: {password!r}" for email, password in data]
 
     @allure.tag(AllureTag.USER_LOGIN)
+    @pytest.mark.xdist_group(name="authorization-group")
     @pytest.mark.parametrize(
         "email, password",
         authorization_data_email_pass,
