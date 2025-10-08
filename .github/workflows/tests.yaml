@@ -24,7 +24,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4  # Используем GitHub Action для установки Python
         with:
-          python-version: '3.13'  # Устанавливаем версию Python 3.11 (можно заменить на другую версию)
+          python-version: '3.11'  # Устанавливаем версию Python 3.11 (можно заменить на другую версию)
 
       # 3. Шаг для установки всех зависимостей проекта
       - name: Install dependencies
@@ -36,8 +36,8 @@ jobs:
       # 4. Шаг для запуска тестов с использованием pytest и генерации отчётов Allure
       - name: Run Playwright tests with pytest and generate Allure results
         run: |
-          pytest -m regression --alluredir=allure-results --numprocesses 2  # Запускаем тесты, отмеченные как "regression", генерируем результаты для Allure
-
+        # Запускаем тесты, отмеченные как "regression", генерируем результаты для Allure
+          pytest -m regression --alluredir=allure-results --numprocesses 2
       # 5. Шаг для получения истории отчётов Allure, если она существует
       - name: Get Allure history
         uses: actions/checkout@v4  # Опять клонируем репозиторий, чтобы получить историю отчётов
