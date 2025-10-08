@@ -1,5 +1,4 @@
 from enum import Enum
-from os.path import exists
 from typing import Self
 
 from pydantic import EmailStr, FilePath, HttpUrl, DirectoryPath, BaseModel
