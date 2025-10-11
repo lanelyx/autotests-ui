@@ -43,6 +43,7 @@ class BaseElement:
             locator = self.get_locator(nth, **kwargs)
             logger.info(step)
             locator.click()
+
         self.track_coverage(ActionType.CLICK, nth=nth, **kwargs)
 
     def check_visible(self, nth: int = 0, **kwargs):
